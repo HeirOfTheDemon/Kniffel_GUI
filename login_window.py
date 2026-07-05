@@ -1,7 +1,9 @@
 import tkinter as tk
 import number_player_window
-from number_player_window import make_player_window
 
+def open_number_player(first_window, second_window):
+    first_window.withdraw()
+    second_window.create()
 
 def make_login_window():
     rootwindow = tk.Tk()
@@ -81,6 +83,7 @@ def make_login_window():
         bg="cyan",
     )
     button_login.place(x=190, y=50)
+    button_login.bind("<Button-1>", lambda x: open_number_player(rootwindow, number_player_window.make_player_window()))
 
     rootwindow.mainloop()
 

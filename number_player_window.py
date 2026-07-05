@@ -1,17 +1,42 @@
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import *
+import entry_player_window
 
+def open_entry_player(firstwindow, secondwindow):
+    firstwindow.withdraw()
+    secondwindow.create()
+
+number_players = 2
+
+def button_arrow_up(text, number):
+    number = number + 1
+    text.delete("1.0", "end")
+    text.insert(
+        index='1.0',
+        chars=f'{number}'
+    )
+    print(number)
+
+def button_arrow_down(text, number):
+    number = number - 1
+    text.delete("1.0", "end")
+    text.insert(
+        index='1.0',
+        chars=f'{number}'
+    )
+    print(number)
 
 def make_player_window():
-    rootwindow = tk.Tk()
 
-    rootwindow.iconbitmap('./assets/Dice_Icon.ico')
-    rootwindow.title("Best Kniffel")
-    rootwindow.geometry("420x600")
-    rootwindow.resizable(False, False)
+    rootwindow2 = tk.Toplevel()
+
+    rootwindow2.iconbitmap('./assets/Dice_Icon.ico')
+    rootwindow2.title("Best Kniffel")
+    rootwindow2.geometry("420x600")
+    rootwindow2.resizable(False, False)
 
     top_frame = tk.Frame(
-        rootwindow,
+        rootwindow2,
         bg="orange",
         width=420,
         height=200
@@ -19,7 +44,7 @@ def make_player_window():
     top_frame.place(x=0, y=0)
 
     middle_frame = tk.Frame(
-        rootwindow,
+        rootwindow2,
         bg="green",
         width=420,
         height=200,
@@ -27,14 +52,14 @@ def make_player_window():
     middle_frame.place(x=0, y=200)
 
     bottom_frame = tk.Frame(
-        rootwindow,
+        rootwindow2,
         bg="red",
         width=420,
         height=200,
     )
     bottom_frame.place(x=0, y=400)
 
-    log_in_label = tk.Label(
+    label_number_players = tk.Label(
         top_frame,
         bg="green",
         width=30,
@@ -42,9 +67,9 @@ def make_player_window():
         text="Wie viele Spieler wollen teilnehmen?",
         font=("Arial", 15)
     )
-    log_in_label.place(x=40, y=140)
+    label_number_players.place(x=40, y=140)
 
-    number_player = tk.Text(
+    text_number_player = tk.Text(
         middle_frame,
         bg="black",
         fg="white",
@@ -52,12 +77,12 @@ def make_player_window():
         height=2,
         font=("Arial", 15)
     )
-    number_player.insert(
+    text_number_player.insert(
         index='1.0',
-        chars='2'
+        chars=f'{number_players}'
     )
-    number_player.place(x=185, y=28)
-    number_player.bind("<Button-1>", lambda event: number_player.delete(0.0, tk.END))
+    text_number_player.place(x=185, y=28)
+    text_number_player.bind("<Button-1>", lambda event: text_number_player.delete(0.0, tk.END))
 
     arrow_up_photo = PhotoImage(file='./assets/Arrow_Up.png')
 
@@ -65,7 +90,8 @@ def make_player_window():
         middle_frame,
         image=arrow_up_photo,
         height=20,
-        width=40
+        width=40,
+        command = lambda: button_arrow_up(text_number_player, number_players)
     )
     button_up.place(x=210, y=30)
 
@@ -75,7 +101,8 @@ def make_player_window():
         middle_frame,
         image=arrow_down_photo,
         height=20,
-        width=40
+        width=40,
+        command=lambda: button_arrow_down(text_number_player, number_players)
     )
     button_down.place(x=210, y=50)
 
@@ -85,5 +112,6 @@ def make_player_window():
         bg="cyan",
     )
     button_start.place(x=190, y=50)
+    button_start.bind("<Button-1>", lambda event: open_entry_player(rootwindow2, entry_player_window.make_entry_player_window()))
 
-    rootwindow.mainloop()
+    rootwindow2.mainloop()
