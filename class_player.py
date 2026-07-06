@@ -1,5 +1,5 @@
 class Player:
-
+# Setter und getter der Player-Klasse
     def set_name(self, name):
         self.name = name
 

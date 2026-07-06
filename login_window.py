@@ -1,10 +1,15 @@
 import tkinter as tk
 import number_player_window
 
+# Öffnet ein Fenster, dass nach TeilnehmerInnen
+# Anzahl fragt
 def open_number_player(first_window, second_window):
     first_window.withdraw()
-    second_window.create()
+    second_window = second_window.make_player_window()
 
+# Erzeugt und populiert ein Fenster, in dem Benutzername
+# und Passwort abgefragt werden und nur nach korrekter
+# Eingabe weiterleitet
 def make_login_window():
     rootwindow = tk.Tk()
 
@@ -47,7 +52,7 @@ def make_login_window():
     )
     log_in_label.place(x=100, y=140)
 
-    username = tk.Text(
+    text_username = tk.Text(
         middle_frame,
         bg="black",
         fg="white",
@@ -55,14 +60,14 @@ def make_login_window():
         height=1,
         font=("Arial", 15)
     )
-    username.insert(
+    text_username.insert(
         index='1.0',
         chars='Username'
     )
-    username.place(x=100, y=40)
-    username.bind("<Button-1>", lambda event: username.delete(0.0, tk.END))
+    text_username.place(x=100, y=40)
+    text_username.bind("<Button-1>", lambda event: username.delete(0.0, tk.END))
 
-    password = tk.Text(
+    text_password = tk.Text(
         middle_frame,
         bg="black",
         fg="white",
@@ -70,12 +75,12 @@ def make_login_window():
         height=1,
         font=("Arial", 15)
     )
-    password.insert(
+    text_password.insert(
         index='1.0',
         chars='Password'
     )
-    password.place(x=100, y=80)
-    password.bind("<Button-1>", lambda event: password.delete(0.0, tk.END))
+    text_password.place(x=100, y=80)
+    text_password.bind("<Button-1>", lambda event: password.delete(0.0, tk.END))
 
     button_login = tk.Button(
         bottom_frame,

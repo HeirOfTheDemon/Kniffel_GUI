@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import *
 import entry_player_window
 
-def open_entry_player(firstwindow, secondwindow):
-    firstwindow.withdraw()
-    secondwindow.create()
+# Öffnet das Fenster zur Eintragung der SpielerInnen
+def open_entry_player(firstwindow):
+    firstwindow.destroy()
+    entry_player_window.make_entry_player_window()
 
 number_players = 2
-
+# Modifiziert das Fenster mit der SpielerInnenanzahl
+# nach oben
 def button_arrow_up(text, number):
     number = number + 1
     text.delete("1.0", "end")
@@ -17,6 +19,8 @@ def button_arrow_up(text, number):
     )
     print(number)
 
+# Modifiziert das Fenster mit der SpielerInnenanzahl
+# nach unten
 def button_arrow_down(text, number):
     number = number - 1
     text.delete("1.0", "end")
@@ -26,6 +30,8 @@ def button_arrow_down(text, number):
     )
     print(number)
 
+# Erzeugt ein Fenster, dass abfragt wie viele
+# SpielerInnen teilnehmen wollen
 def make_player_window():
 
     rootwindow2 = tk.Toplevel()
@@ -112,6 +118,6 @@ def make_player_window():
         bg="cyan",
     )
     button_start.place(x=190, y=50)
-    button_start.bind("<Button-1>", lambda event: open_entry_player(rootwindow2, entry_player_window.make_entry_player_window()))
+    button_start.bind("<Button-1>", lambda event: open_entry_player(rootwindow2))
 
     rootwindow2.mainloop()

@@ -1,9 +1,23 @@
 import tkinter as tk
+from class_dice import Dice
 from class_cell import Cell
+
+
 
 def check_row_score_entry():
     pass
 
+# Instanziere fünf Würfel-Objekte,
+# die später verwendet, um Kniffel zu spielen
+dice1 = Dice()
+dice2 = Dice()
+dice3 = Dice()
+dice4 = Dice()
+dice5 = Dice()
+
+
+# Erstelle und populiere das Spielfenster. Es werden
+# Würfel und Statistiken angezeigt
 def make_game_window():
     rootwindow4 = tk.Toplevel()
 
@@ -214,63 +228,81 @@ def make_game_window():
     )
     label_sum_game.grid(row=14, column=0, sticky="e")'''
 
+# Erstelle ein Netz aus Knöpfen, die für die
+# SpielerInnen-Statistiken verwendet werden
     for i in range (1, 14):
         for j in range (1, 5):
             button_cell = Cell(i, j)
             button_cell.create_button_object(top_middle_frame)
             button_cell.cell_button_object.grid(row=i, column=j)
 
+    image_dice_one = tk.PhotoImage(file="./assets/Dice_One.png")
+    image_dice_two = tk.PhotoImage(file="./assets/Dice_Two.png")
+    image_dice_three = tk.PhotoImage(file="./assets/Dice_Three.png")
+    image_dice_four = tk.PhotoImage(file="./assets/Dice_Four.png")
+    image_dice_five = tk.PhotoImage(file="./assets/Dice_Five.png")
+    image_dice_six = tk.PhotoImage(file="./assets/Dice_Six.png")
 
-
+# Würfelknöpfe
     button_top_left_dice = tk.Button(
         bottom_middle_frame,
-        text="1",
+        image=image_dice_one,
         bg="purple",
-        width=5,
-        height=2
+        width=40,
+        height=40
     )
     button_top_left_dice.place(x=75, y=35)
+    button_top_left_dice.bind("<Button-1>", lambda x: dice1.keep_dice(button_top_left_dice))
 
     button_bottom_left_dice = tk.Button(
         bottom_middle_frame,
-        text="2",
+        image=image_dice_two,
         bg="purple",
-        width=5,
-        height=2
+        width=40,
+        height=40
     )
     button_bottom_left_dice.place(x=115, y=105)
+    button_bottom_left_dice.bind("<Button-1>", lambda x: dice2.keep_dice(button_bottom_left_dice))
 
     button_top_middle_dice = tk.Button(
         bottom_middle_frame,
-        text="3",
+        image=image_dice_three,
         bg="purple",
-        width=5,
-        height=2
+        width=40,
+        height=40
     )
     button_top_middle_dice.place(x=190, y=35)
+    button_top_middle_dice.bind("<Button-1>", lambda x: dice3.keep_dice(button_top_middle_dice))
 
     button_bottom_right_dice = tk.Button(
         bottom_middle_frame,
-        text="4",
+        image=image_dice_four,
         bg="purple",
-        width=5,
-        height=2
+        width=40,
+        height=40
     )
     button_bottom_right_dice.place(x=265, y=105)
+    button_bottom_right_dice.bind("<Button-1>", lambda x: dice4.keep_dice(button_top_right_dice))
 
     button_top_right_dice = tk.Button(
         bottom_middle_frame,
-        text="5",
+        image=image_dice_five,
         bg="purple",
-        width=5,
-        height=2
+        width=40,
+        height=40
     )
     button_top_right_dice.place(x=305, y=35)
+    button_top_right_dice.bind("<Button-1>", lambda x: dice5.keep_dice(button_top_right_dice))
 
     button_roll = tk.Button(
         bottom_frame,
         text="würfeln",
         bg="purple",
+        command=lambda: [dice1.roll_dice(button_top_left_dice),
+                         dice2.roll_dice(button_bottom_left_dice),
+                         dice3.roll_dice(button_top_middle_dice),
+                         dice4.roll_dice(button_bottom_right_dice),
+                         dice5.roll_dice(button_top_right_dice)]
     )
     button_roll.place(x=180, y=2)
 
