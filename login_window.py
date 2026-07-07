@@ -65,7 +65,7 @@ def make_login_window():
         chars='Username'
     )
     text_username.place(x=100, y=40)
-    text_username.bind("<Button-1>", lambda event: username.delete(0.0, tk.END))
+    text_username.bind("<Button-1>", lambda event: text_username.delete(0.0, tk.END))
 
     text_password = tk.Text(
         middle_frame,
@@ -80,7 +80,7 @@ def make_login_window():
         chars='Password'
     )
     text_password.place(x=100, y=80)
-    text_password.bind("<Button-1>", lambda event: password.delete(0.0, tk.END))
+    text_password.bind("<Button-1>", lambda event: text_password.delete(0.0, tk.END))
 
     button_login = tk.Button(
         bottom_frame,

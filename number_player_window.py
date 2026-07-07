@@ -1,34 +1,35 @@
 import tkinter as tk
 from tkinter import *
 import entry_player_window
+import class_temp_player_num
+
+tmpPlayer = class_temp_player_num.tmpPlayer()
 
 # Öffnet das Fenster zur Eintragung der SpielerInnen
 def open_entry_player(firstwindow):
     firstwindow.destroy()
     entry_player_window.make_entry_player_window()
 
-number_players = 2
+#number_players = 2
 # Modifiziert das Fenster mit der SpielerInnenanzahl
-# nach oben
-def button_arrow_up(text, number):
-    number = number + 1
+# nach oben höchstens 8
+def button_arrow_up(text, tmpPlayer):
+    tmpPlayer.addPlayer()
     text.delete("1.0", "end")
     text.insert(
         index='1.0',
-        chars=f'{number}'
+        chars=f'{tmpPlayer.number_players}'
     )
-    print(number)
 
 # Modifiziert das Fenster mit der SpielerInnenanzahl
-# nach unten
-def button_arrow_down(text, number):
-    number = number - 1
+# nach unten mind. 2
+def button_arrow_down(text, tmpPlayer):
+    tmpPlayer.remPlayer()
     text.delete("1.0", "end")
     text.insert(
         index='1.0',
-        chars=f'{number}'
+        chars=f'{tmpPlayer.number_players}'
     )
-    print(number)
 
 # Erzeugt ein Fenster, dass abfragt wie viele
 # SpielerInnen teilnehmen wollen
@@ -85,7 +86,7 @@ def make_player_window():
     )
     text_number_player.insert(
         index='1.0',
-        chars=f'{number_players}'
+        chars=f'{tmpPlayer.number_players}'
     )
     text_number_player.place(x=185, y=28)
     text_number_player.bind("<Button-1>", lambda event: text_number_player.delete(0.0, tk.END))
@@ -97,7 +98,7 @@ def make_player_window():
         image=arrow_up_photo,
         height=20,
         width=40,
-        command = lambda: button_arrow_up(text_number_player, number_players)
+        command = lambda: button_arrow_up(text_number_player, tmpPlayer)
     )
     button_up.place(x=210, y=30)
 
@@ -108,7 +109,7 @@ def make_player_window():
         image=arrow_down_photo,
         height=20,
         width=40,
-        command=lambda: button_arrow_down(text_number_player, number_players)
+        command=lambda: button_arrow_down(text_number_player, tmpPlayer)
     )
     button_down.place(x=210, y=50)
 

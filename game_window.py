@@ -1,19 +1,31 @@
 import tkinter as tk
+
+import class_cell
 from class_dice import Dice
 from class_cell import Cell
 
 
+dices = []
+list_erg = []
 
-def check_row_score_entry():
-    pass
 
-# Instanziere fünf Würfel-Objekte,
-# die später verwendet, um Kniffel zu spielen
-dice1 = Dice()
-dice2 = Dice()
-dice3 = Dice()
-dice4 = Dice()
-dice5 = Dice()
+def on_roll():
+    for dice in dices:
+        dice.roll_dice()
+
+
+    list_erg = []
+    for dice in dices:
+        list_erg.append(dice.roll)
+    print(list_erg)
+
+def get_tracked_dice():
+    tracked_dice = []
+    for dice in dices:
+        if dice.is_button_pressed:
+            tracked_dice.append(dice.roll)
+    print(f'(tracked: {tracked_dice}')
+    return tracked_dice
 
 
 # Erstelle und populiere das Spielfenster. Es werden
@@ -235,13 +247,23 @@ def make_game_window():
             button_cell = Cell(i, j)
             button_cell.create_button_object(top_middle_frame)
             button_cell.cell_button_object.grid(row=i, column=j)
+            #button_cell.cell_button_object.bind("<Button-1>", lambda x: get_tracked_dice())
+            #button_cell.cell_button_object.config(text=sum(get_tracked_dice()))
+
+
+    '''for i in range (1, 14):
+        for j in range (1, 5):
+            button_cell(i, j).config(
+                command = get_tracked_dice()
+            )'''
+
 
     image_dice_one = tk.PhotoImage(file="./assets/Dice_One.png")
     image_dice_two = tk.PhotoImage(file="./assets/Dice_Two.png")
     image_dice_three = tk.PhotoImage(file="./assets/Dice_Three.png")
     image_dice_four = tk.PhotoImage(file="./assets/Dice_Four.png")
     image_dice_five = tk.PhotoImage(file="./assets/Dice_Five.png")
-    image_dice_six = tk.PhotoImage(file="./assets/Dice_Six.png")
+    #image_dice_six = tk.PhotoImage(file="./assets/Dice_Six.png")
 
 # Würfelknöpfe
     button_top_left_dice = tk.Button(
@@ -252,7 +274,7 @@ def make_game_window():
         height=40
     )
     button_top_left_dice.place(x=75, y=35)
-    button_top_left_dice.bind("<Button-1>", lambda x: dice1.keep_dice(button_top_left_dice))
+    button_top_left_dice.bind("<Button-1>", lambda first_button_pressed: dices[0].keep_dice(button_top_left_dice))
 
     button_bottom_left_dice = tk.Button(
         bottom_middle_frame,
@@ -262,7 +284,8 @@ def make_game_window():
         height=40
     )
     button_bottom_left_dice.place(x=115, y=105)
-    button_bottom_left_dice.bind("<Button-1>", lambda x: dice2.keep_dice(button_bottom_left_dice))
+    button_bottom_left_dice.bind("<Button-1>", lambda second_button_pressed: dices[1].keep_dice(button_bottom_left_dice))
+
 
     button_top_middle_dice = tk.Button(
         bottom_middle_frame,
@@ -272,7 +295,7 @@ def make_game_window():
         height=40
     )
     button_top_middle_dice.place(x=190, y=35)
-    button_top_middle_dice.bind("<Button-1>", lambda x: dice3.keep_dice(button_top_middle_dice))
+    button_top_middle_dice.bind("<Button-1>", lambda third_button_pressed: dices[2].keep_dice(button_top_middle_dice))
 
     button_bottom_right_dice = tk.Button(
         bottom_middle_frame,
@@ -282,7 +305,7 @@ def make_game_window():
         height=40
     )
     button_bottom_right_dice.place(x=265, y=105)
-    button_bottom_right_dice.bind("<Button-1>", lambda x: dice4.keep_dice(button_top_right_dice))
+    button_bottom_right_dice.bind("<Button-1>", lambda fourth_button_pressed: dices[3].keep_dice(button_bottom_right_dice))
 
     button_top_right_dice = tk.Button(
         bottom_middle_frame,
@@ -292,17 +315,22 @@ def make_game_window():
         height=40
     )
     button_top_right_dice.place(x=305, y=35)
-    button_top_right_dice.bind("<Button-1>", lambda x: dice5.keep_dice(button_top_right_dice))
+    button_top_right_dice.bind("<Button-1>", lambda fifth_button_pressed: dices[4].keep_dice(button_top_right_dice))
+
+    # Instanziere fünf Würfel-Objekte,
+    # die verwendet, um Kniffel zu spielen
+    global dices
+    dices = [Dice(0, button_top_left_dice),
+             Dice(1, button_bottom_left_dice),
+             Dice(2, button_top_middle_dice),
+             Dice(3, button_bottom_right_dice),
+             Dice(4, button_top_right_dice)]
 
     button_roll = tk.Button(
         bottom_frame,
         text="würfeln",
         bg="purple",
-        command=lambda: [dice1.roll_dice(button_top_left_dice),
-                         dice2.roll_dice(button_bottom_left_dice),
-                         dice3.roll_dice(button_top_middle_dice),
-                         dice4.roll_dice(button_bottom_right_dice),
-                         dice5.roll_dice(button_top_right_dice)]
+        command=lambda: [on_roll()]
     )
     button_roll.place(x=180, y=2)
 

@@ -8,12 +8,12 @@ class Cell:
         self.cell_button_object = None
         self.x = x
         self.y = y
+        self.sum_tracked_dice = 0
 
-# Erstellt Knopf für die Statistiken
+# Erstellt Knopf um die Statistiken zu speichern
     def create_button_object(self, location):
         button_score = tk.Button(
             location,
-            text=f"{self.x} : {self.y}",
             bg="orange",
             height=1,
             width=12,
@@ -23,6 +23,7 @@ class Cell:
 
 # Beim Linksklick wird die Anzahl der gewählten Würfel
 # als Summe gespeichert
-    def left_click_action(self, event):
-        print(event)
-        print(f"left click action")
+    def left_click_action(self,event):
+        global get_tracked_dices
+        print(sum(get_tracked_dices))
+        self.cell_button_object.config(text=list_erg)
