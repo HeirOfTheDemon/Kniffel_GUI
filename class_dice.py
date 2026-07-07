@@ -4,7 +4,7 @@ import random
 class Dice:
 
     list_dice=[]
-    list_dice_tracked=[]
+    #list_dice_tracked=[]
 
 # Erzeugt Constructor, der zwei Attribute akzeptiert
     def __init__(self, id_dice, button):

@@ -1,4 +1,6 @@
 import tkinter as tk
+import class_dice_logic as dl
+
 
 class Cell:
 
@@ -24,6 +26,5 @@ class Cell:
 # Beim Linksklick wird die Anzahl der gewählten Würfel
 # als Summe gespeichert
     def left_click_action(self,event):
-        global get_tracked_dices
-        print(sum(get_tracked_dices))
-        self.cell_button_object.config(text=list_erg)
+        dl.get_result()
+        self.cell_button_object.config(text=dl.result)

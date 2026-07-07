@@ -1,31 +1,28 @@
 import tkinter as tk
-
-import class_cell
 from class_dice import Dice
 from class_cell import Cell
 
 
 dices = []
-list_erg = []
-
+list_all_dice = []
+'''global tracked_dice
+tracked_dice = []'''
 
 def on_roll():
+    global list_all_dice
+    list_all_dice = []
     for dice in dices:
         dice.roll_dice()
+        list_all_dice.append(dice.roll)
+    return list_all_dice
 
-
-    list_erg = []
-    for dice in dices:
-        list_erg.append(dice.roll)
-    print(list_erg)
-
-def get_tracked_dice():
+'''def get_tracked_dice():
     tracked_dice = []
     for dice in dices:
         if dice.is_button_pressed:
             tracked_dice.append(dice.roll)
     print(f'(tracked: {tracked_dice}')
-    return tracked_dice
+    return tracked_dice'''
 
 
 # Erstelle und populiere das Spielfenster. Es werden
