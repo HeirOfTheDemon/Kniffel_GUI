@@ -5,6 +5,7 @@ from class_cell import Cell
 
 dices = []
 list_all_dice = []
+button_cell = None
 '''global tracked_dice
 tracked_dice = []'''
 
@@ -14,6 +15,7 @@ def on_roll():
     for dice in dices:
         dice.roll_dice()
         list_all_dice.append(dice.roll)
+    print(list_all_dice)
     return list_all_dice
 
 '''def get_tracked_dice():
@@ -241,6 +243,7 @@ def make_game_window():
 # SpielerInnen-Statistiken verwendet werden
     for i in range (1, 14):
         for j in range (1, 5):
+            global button_cell
             button_cell = Cell(i, j)
             button_cell.create_button_object(top_middle_frame)
             button_cell.cell_button_object.grid(row=i, column=j)
