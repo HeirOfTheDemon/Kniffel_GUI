@@ -3,6 +3,7 @@ import game_window
 from class_player import Player
 
 player_names = []
+list_player = []
 # Öffnet das Spielfenster
 def open_game(firstwindow):
     firstwindow.destroy()
@@ -16,8 +17,16 @@ def create_player():
 def retrieve_player_name(text):
     player_name = text.get("1.0", "end-1c")
     player_names.append(player_name)
-    #object_create_player(player_names)
-    print(player_names)
+
+# Erstellt für die Einträge die im Spiel gemacht werden jeweils ein
+# neues SpielerInnen-Objekt
+def create_player_objects():
+    global list_player
+    list_player = []
+    for player_name in player_names:
+        player = Player(player_name)
+        list_player.append(player)
+
 
 # Macht ein Fenster auf, dass abfragt welche SpielerInnen
 # teilnehmen möchten.
@@ -84,13 +93,13 @@ def make_entry_player_window():
         bg="cyan",
         command = lambda: retrieve_player_name(text_player_entry)
     )
-    button_player_entry.place(x=120, y=50)
+    button_player_entry.place(x=100, y=50)
 
     button_continue = tk.Button(
         bottom_frame,
         text="weiter",
         bg="cyan",
-        command=lambda: open_game(rootwindow3)
+        command=lambda: (create_player_objects(), open_game(rootwindow3))
     )
     button_continue.place(x=230, y=50)
 

@@ -1,11 +1,29 @@
 import tkinter as tk
 import number_player_window
+import interact_DB
+from interact_DB import check_entry
+
 
 # Öffnet ein Fenster, dass nach TeilnehmerInnen
 # Anzahl fragt
-def open_number_player(first_window, second_window):
-    first_window.withdraw()
-    second_window = second_window.make_player_window()
+def open_number_player(first_window, second_window, check):
+    if check:
+        first_window.withdraw()
+        second_window = second_window.make_player_window()
+    else:
+        popup_denied = tk.Tk()
+        popup_denied.title("ACCESS DENIED")
+        popup_denied.geometry("300x50")
+
+        label_denied = tk.Label(
+            popup_denied,
+            height=50,
+            width=300,
+            bg="black",
+            fg="yellow",
+            text="Wrong Login")
+        label_denied.pack()
+        popup_denied.mainloop()
 
 # Erzeugt und populiert ein Fenster, in dem Benutzername
 # und Passwort abgefragt werden und nur nach korrekter
@@ -67,28 +85,44 @@ def make_login_window():
     text_username.place(x=100, y=40)
     text_username.bind("<Button-1>", lambda event: text_username.delete(0.0, tk.END))
 
-    text_password = tk.Text(
+    entry_password = tk.Entry(
+        middle_frame,
+        bg="black",
+        fg="white",
+        width=20,
+        font=("Arial", 15),
+        show="*"
+    )
+    entry_password.place(x=100, y=80)
+
+    '''text_password = tk.Text(
         middle_frame,
         bg="black",
         fg="white",
         width=20,
         height=1,
-        font=("Arial", 15)
+        font=("Arial", 15),
+        show = "*"
     )
     text_password.insert(
         index='1.0',
         chars='Password'
     )
     text_password.place(x=100, y=80)
-    text_password.bind("<Button-1>", lambda event: text_password.delete(0.0, tk.END))
+    text_password.bind("<Button-1>", lambda event: text_password.delete(0.0, tk.END))'''
 
     button_login = tk.Button(
         bottom_frame,
         text="Log In",
         bg="cyan",
     )
-    button_login.place(x=190, y=50)
-    button_login.bind("<Button-1>", lambda x: open_number_player(rootwindow, number_player_window.make_player_window()))
+    button_login.place(x=180, y=50)
+    button_login.bind("<Button-1>", lambda x: number_player_window.make_player_window() )
+    button_login.bind("<Button-1>", lambda x: open_number_player(
+                        rootwindow,
+                        number_player_window,
+                        check_entry(text_username.get("1.0", "end-1c"), entry_password.get())
+                        ))
 
     rootwindow.mainloop()
 

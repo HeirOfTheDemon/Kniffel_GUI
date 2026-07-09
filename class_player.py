@@ -1,4 +1,10 @@
+import game_window as gw
+
 class Player:
+    number_players = []
+
+    def __init__(self, name):
+        self.name = name
 # Setter und getter der Player-Klasse
     def set_name(self, name):
         self.name = name
@@ -11,3 +17,5 @@ class Player:
 
     def get_score(self):
         return self.score
+
+    #gw.button_cell(1,1)

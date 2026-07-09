@@ -88,7 +88,7 @@ def make_player_window():
         index='1.0',
         chars=f'{tmpPlayer.number_players}'
     )
-    text_number_player.place(x=185, y=28)
+    text_number_player.place(x=165, y=28)
     text_number_player.bind("<Button-1>", lambda event: text_number_player.delete(0.0, tk.END))
 
     arrow_up_photo = PhotoImage(file='./assets/Arrow_Up.png')
@@ -118,7 +118,7 @@ def make_player_window():
         text="Los geht's",
         bg="cyan",
     )
-    button_start.place(x=190, y=50)
+    button_start.place(x=170, y=50)
     button_start.bind("<Button-1>", lambda event: open_entry_player(rootwindow2))
 
     rootwindow2.mainloop()

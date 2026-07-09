@@ -1,6 +1,7 @@
 import tkinter as tk
 from class_dice import Dice
 from class_cell import Cell
+import entry_player_window
 
 
 dices = []
