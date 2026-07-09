@@ -117,7 +117,7 @@ def make_login_window():
         bg="cyan",
     )
     button_login.place(x=180, y=50)
-    button_login.bind("<Button-1>", lambda x: number_player_window.make_player_window() )
+    #button_login.bind("<Button-1>", lambda x: number_player_window.make_player_window() )
     button_login.bind("<Button-1>", lambda x: open_number_player(
                         rootwindow,
                         number_player_window,
