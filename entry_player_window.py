@@ -9,9 +9,7 @@ def open_game(firstwindow):
     firstwindow.destroy()
     game_window.make_game_window()
 
-# Erzeugt eine SpiereInnen-Liste
-def create_player():
-    pass
+
 # Populiert die eingetragenen SpielerInnen-Namen
 # in eine Liste
 def retrieve_player_name(text):
@@ -32,6 +30,8 @@ def create_player_objects():
 # teilnehmen möchten.
 def make_entry_player_window():
     rootwindow3 = tk.Toplevel()
+
+    #rootwindow2.iconbitmap('./assets/Dice_Icon.ico')
     rootwindow3.title("Best Kniffel")
     rootwindow3.geometry("420x600")
     rootwindow3.resizable(False, False)

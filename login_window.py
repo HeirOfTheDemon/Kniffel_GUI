@@ -5,14 +5,16 @@ from interact_DB import check_entry
 
 
 # Öffnet ein Fenster, dass nach TeilnehmerInnen
-# Anzahl fragt
+# Anzahl fragt, wenn die richtigen Zugangsdaten
+# eingegeben wurden, sonst gibt es ein popup mit dem
+# Inhalt, dass Zugriff verweigert wurde
 def open_number_player(first_window, second_window, check):
     if check:
         first_window.withdraw()
         second_window = second_window.make_player_window()
     else:
         popup_denied = tk.Tk()
-        popup_denied.title("ACCESS DENIED")
+        popup_denied.title("ZUGRIFF VERWEIGERT")
         popup_denied.geometry("300x50")
 
         label_denied = tk.Label(
@@ -21,7 +23,7 @@ def open_number_player(first_window, second_window, check):
             width=300,
             bg="black",
             fg="yellow",
-            text="Wrong Login")
+            text="FALSCHE ZUGANGSDATEN")
         label_denied.pack()
         popup_denied.mainloop()
 
@@ -31,7 +33,7 @@ def open_number_player(first_window, second_window, check):
 def make_login_window():
     rootwindow = tk.Tk()
 
-    rootwindow.iconbitmap('./assets/Dice_Icon.ico')
+    #rootwindow.iconbitmap('./assets/Dice_Icon.ico')
     rootwindow.title("Best Kniffel")
     rootwindow.geometry("420x600")
     rootwindow.resizable(False, False)
@@ -111,6 +113,7 @@ def make_login_window():
     text_password.place(x=100, y=80)
     text_password.bind("<Button-1>", lambda event: text_password.delete(0.0, tk.END))'''
 
+# Der Knopf zum Anmelden.
     button_login = tk.Button(
         bottom_frame,
         text="Log In",

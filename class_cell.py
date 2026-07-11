@@ -1,6 +1,4 @@
 import tkinter as tk
-from asyncio import events
-
 import dice_logic as dl
 
 
@@ -23,7 +21,7 @@ class Cell:
             location,
             bg="orange",
             height=1,
-            width=12,
+            width=5,
         )
         button_score.bind("<Button-1>", self.left_click_action)
         self.cell_button_object = button_score

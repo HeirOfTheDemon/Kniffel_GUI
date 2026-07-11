@@ -1,4 +1,6 @@
-import game_window as gw
+# Diese Spielerklasse wurde erzeugt für die Idee
+# der Verfolgung, Berechnung und Ausgabe der Punkte.
+# Die Implementierung folgt in Version 2.0
 
 class Player:
     number_players = []

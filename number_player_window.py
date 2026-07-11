@@ -37,7 +37,7 @@ def make_player_window():
 
     rootwindow2 = tk.Toplevel()
 
-    rootwindow2.iconbitmap('./assets/Dice_Icon.ico')
+    #rootwindow2.iconbitmap('./assets/Dice_Icon.ico')
     rootwindow2.title("Best Kniffel")
     rootwindow2.geometry("420x600")
     rootwindow2.resizable(False, False)

@@ -1,24 +1,34 @@
 import tkinter as tk
 from class_dice import Dice
 from class_cell import Cell
-import entry_player_window
 
 
+roll_counter = 0
 dices = []
 list_all_dice = []
 button_cell = None
 '''global tracked_dice
 tracked_dice = []'''
 
-def on_roll():
+# Diese Funktion bekommt das Würfe-Label als Parameter
+# prüft ob drei Würfe gemacht wurden und führt dann
+# den Würfelvorgang aus und füllt eine Liste mit den
+# Ergebnissen. Sie verändert auch das Label
+def on_roll(lab_roll):
+    global roll_counter
+    if roll_counter == 3:
+        roll_counter = 0
     global list_all_dice
     list_all_dice = []
     for dice in dices:
         dice.roll_dice()
         list_all_dice.append(dice.roll)
-    print(list_all_dice)
+    #print(list_all_dice)
+    roll_counter += 1
+    lab_roll.config(text=f'Wurf: {roll_counter}/3')
     return list_all_dice
 
+#Erster Versuch die Würfel zu verfolgen, die gedrückt wurden
 '''def get_tracked_dice():
     tracked_dice = []
     for dice in dices:
@@ -33,10 +43,38 @@ def on_roll():
 def make_game_window():
     rootwindow4 = tk.Toplevel()
 
-    rootwindow4.iconbitmap('./assets/Dice_Icon.ico')
+    # Ersetzt die Standard Funktion des Schließen-Knopfes [X]
+    # in ein popup, dass fragt ob wirklich geschlossen werden soll.
+    def on_close():
+        close_popup = tk.Toplevel()
+        close_popup.title("SCHLIEßEN")
+        close_popup.geometry("400x150")
+        close_popup.resizable(False, False)
+        close_popup.configure(bg="black")
+
+        button_yes = tk.Button(
+            close_popup,
+            bg="red",
+            text="Schließen",
+            font=("Arial", 15)
+        )
+        button_yes.place(x=75, y=50)
+        button_yes.bind("<Button-1>", lambda x: rootwindow4.destroy())
+
+        button_no = tk.Button(
+            close_popup,
+            bg="green",
+            text="Weiterspielen",
+            font=("Arial", 15),
+            command= lambda: close_popup.destroy()
+        )
+        button_no.place(x=200, y=50)
+
+    #rootwindow4.iconbitmap('./assets/Dice_Icon.ico')
     rootwindow4.title("Best Kniffel")
     rootwindow4.geometry("420x600")
     rootwindow4.resizable(False, False)
+    rootwindow4.protocol("WM_DELETE_WINDOW", lambda: on_close())
 
     top_frame = tk.Frame(
         rootwindow4,
@@ -216,6 +254,9 @@ def make_game_window():
     )
     label_chance.grid(row=13, column=0, sticky="e")
 
+
+# Kein Platz für so viele Fenster auf der gewählten
+# Größe des Spielfensters
     '''label_sum_lower = tk.Label(
         top_middle_frame,
         bg="orange",
@@ -243,15 +284,14 @@ def make_game_window():
 # Erstelle ein Netz aus Knöpfen, die für die
 # SpielerInnen-Statistiken verwendet werden
     for i in range (1, 14):
-        for j in range (1, 5):
+        for j in range (1, 9):
             global button_cell
             button_cell = Cell(i, j)
             button_cell.create_button_object(top_middle_frame)
             button_cell.cell_button_object.grid(row=i, column=j)
-            #button_cell.cell_button_object.bind("<Button-1>", lambda x: get_tracked_dice())
-            #button_cell.cell_button_object.config(text=sum(get_tracked_dice()))
 
-
+# Misslungener Versuch die Zellen des Kniffelblocks
+# einzeln anzusprechen
     '''for i in range (1, 14):
         for j in range (1, 5):
             button_cell(i, j).config(
@@ -266,7 +306,7 @@ def make_game_window():
     image_dice_five = tk.PhotoImage(file="./assets/Dice_Five.png")
     #image_dice_six = tk.PhotoImage(file="./assets/Dice_Six.png")
 
-# Würfelknöpfe
+# Würfelknöpfe werden erzeugt und ihnen wird die 'behalten' Funktion übergeben
     button_top_left_dice = tk.Button(
         bottom_middle_frame,
         image=image_dice_one,
@@ -318,8 +358,19 @@ def make_game_window():
     button_top_right_dice.place(x=305, y=35)
     button_top_right_dice.bind("<Button-1>", lambda fifth_button_pressed: dices[4].keep_dice(button_top_right_dice))
 
+    label_roll = tk.Label(
+        bottom_middle_frame,
+        bg="orange",
+        text="Wurf: 0/3",
+        font=("Arial", 10),
+    )
+    label_roll.place(x=358, y=155)
+
+
+
+
     # Instanziere fünf Würfel-Objekte,
-    # die verwendet, um Kniffel zu spielen
+    # die verwendet werden um Kniffel zu spielen
     global dices
     dices = [Dice(0, button_top_left_dice),
              Dice(1, button_bottom_left_dice),
@@ -331,7 +382,7 @@ def make_game_window():
         bottom_frame,
         text="würfeln",
         bg="purple",
-        command=lambda: [on_roll()]
+        command=lambda: [on_roll(label_roll)]
     )
     button_roll.place(x=180, y=2)
 

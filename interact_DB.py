@@ -11,6 +11,8 @@ def check_entry(un, pw):
     for row in cursor.fetchall():
         users.append(row)
 
+    connection.close()
+
     for user in users:
         if str(user) == f"('{un}', '{pw}')":
             return True
