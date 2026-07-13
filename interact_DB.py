@@ -1,7 +1,9 @@
+import hashlib
 import sqlite3
 
 
-
+# Zugriff auf Datenbank mit verschlüsselten Passwörtern
+# verschlüsselt Eingabe und kontrolliert, ob korrekt
 def check_entry(un, pw):
     users = []
     connection = sqlite3.connect('./database/user_database.db')
@@ -12,6 +14,8 @@ def check_entry(un, pw):
         users.append(row)
 
     connection.close()
+
+    pw = hashlib.sha256(pw.encode()).hexdigest()
 
     for user in users:
         if str(user) == f"('{un}', '{pw}')":
